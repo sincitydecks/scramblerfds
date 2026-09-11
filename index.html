@@ -126,13 +126,26 @@ button{border:0}
 
 /* Game */
 .game{
-  min-height:100vh;padding:88px 18px 18px;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,410px);gap:18px;
+  height:100vh;height:100svh;max-height:100vh;padding:76px 18px 18px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,380px);gap:16px;
+  overflow:hidden;
 }
-.game-map-panel,.task-panel{min-height:calc(100vh - 106px);border-radius:28px;overflow:hidden}
 .game-map-panel{
   position:relative;background:rgba(255,255,255,.32);border:1px solid rgba(0,32,91,.09);
-  box-shadow:0 22px 56px rgba(0,32,91,.08)
+  box-shadow:0 22px 56px rgba(0,32,91,.08);display:flex;flex-direction:column;
+  border-radius:26px;overflow:hidden;
+}
+.task-panel{
+  background:var(--rfds-navy);color:#fff;padding:26px;display:flex;flex-direction:column;
+  box-shadow:0 25px 60px rgba(0,32,91,.18);position:relative;
+  border-radius:26px;overflow:hidden;
+}
+@media (min-width: 901px) {
+  .game-map-panel, .task-panel {
+    height:100%;
+    min-height:0;
+    max-height:100%;
+  }
 }
 .map-toolbar{position:absolute;inset:18px 18px auto;display:flex;justify-content:space-between;align-items:center;z-index:8;pointer-events:none}
 .pill{
@@ -160,41 +173,82 @@ button{border:0}
   position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;
   background:rgba(0,32,91,.90);color:#fff;padding:10px 14px;border-radius:999px;
   font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
-  box-shadow:0 10px 24px rgba(0,32,91,.20)
+  box-shadow:0 10px 24px rgba(0,32,91,.20);pointer-events:none;
 }
 .guess-dot,.origin-dot,.actual-dot{
   position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:6;
 }
 .guess-dot{width:24px;height:24px;border-radius:50%;border:3px solid var(--rfds-red);background:#fff;box-shadow:0 0 0 7px rgba(240,91,34,.16),0 8px 22px rgba(0,32,91,.18);animation:guessDrop .22s ease-out}
 .guess-dot:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;background:var(--rfds-red);transform:translate(-50%,-50%)}
-.origin-dot{width:9px;height:9px;background:var(--rfds-red);border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 6px rgba(240,91,34,.13)}
-.origin-dot:after{content:"";position:absolute;inset:-9px;border:1px solid rgba(240,91,34,.35);border-radius:50%;animation:mapPulse 3.5s ease-out infinite}
+.origin-dot{
+  width:12px;height:12px;background:var(--rfds-red);border:2px solid #fff;border-radius:50%;
+  box-shadow:0 0 0 5px rgba(240,91,34,.22),0 0 16px rgba(240,91,34,.45);z-index:7;
+}
+.origin-dot:after{
+  content:"";position:absolute;inset:-10px;border:1.5px solid rgba(240,91,34,.50);
+  border-radius:50%;animation:mapPulse 3s ease-out infinite;
+}
+.origin-tag{
+  position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);
+  background:var(--rfds-red);color:#fff;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.45);white-space:nowrap;
+  pointer-events:none;box-shadow:0 4px 14px rgba(0,32,91,.25),0 0 12px rgba(240,91,34,.35);
+  display:inline-flex;align-items:center;gap:4px;
+}
+.origin-tag:before{
+  content:"BASE:";opacity:.8;font-size:8px;letter-spacing:.12em;
+}
 @keyframes guessDrop{from{transform:translate(-50%,-50%) scale(.55);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
 .route-svg{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:visible}
 .route-path{fill:none;stroke:var(--rfds-red);stroke-width:3;stroke-linecap:round;stroke-dasharray:12 10;filter:drop-shadow(0 0 8px rgba(240,91,34,.18));opacity:.9}
 .task-panel{
-  background:var(--rfds-navy);color:#fff;padding:28px;display:flex;flex-direction:column;
-  box-shadow:0 25px 60px rgba(0,32,91,.18);position:relative
+  background:var(--rfds-navy);color:#fff;padding:26px;display:flex;flex-direction:column;
+  box-shadow:0 25px 60px rgba(0,32,91,.18);position:relative;
 }
 .task-panel:before{
   content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
   background:radial-gradient(circle at 100% 0,rgba(0,173,239,.35),transparent 28%),radial-gradient(circle at 0 100%,rgba(240,91,34,.28),transparent 22%)
 }
-.task-content{position:relative;z-index:2;display:flex;flex-direction:column;min-height:100%}
+.task-content{position:relative;z-index:2;display:flex;flex-direction:column}
+@media (min-width: 901px) {
+  .task-content{height:100%;justify-content:space-between}
+}
 .task-kicker{display:flex;justify-content:space-between;gap:12px;color:rgba(255,255,255,.48);font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
 .task-kicker strong{color:#fff}
-.task-panel h2{font-size:clamp(2rem,3.6vw,3.6rem);line-height:.95;letter-spacing:-.05em;margin:24px 0 9px;font-weight:900}
-.task-type{color:var(--rfds-red);font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:28px}
+.task-panel h2{font-size:clamp(2rem,3.6vw,3.6rem);line-height:.95;letter-spacing:-.05em;margin:20px 0 9px;font-weight:900}
+.task-type{color:var(--rfds-red);font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:24px}
 .task-data{display:grid;gap:0;border-top:1px solid rgba(255,255,255,.11);border-bottom:1px solid rgba(255,255,255,.11)}
-.task-data-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px}
+.task-data-row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px}
 .task-data-row:last-child{border-bottom:0}
 .task-data-row span{color:rgba(255,255,255,.43);font-size:9px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
 .task-data-row strong{text-align:right;font-weight:700}
-.question{margin-top:auto;padding-top:24px;color:rgba(255,255,255,.62);font-size:10px;line-height:1.5;letter-spacing:.10em;text-transform:uppercase}
+#task-base{
+  color:var(--rfds-red) !important;
+  font-weight:900 !important;
+  font-size:13px;
+  letter-spacing:.03em;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  justify-content:flex-end;
+  text-shadow:0 0 16px rgba(240,91,34,.28);
+}
+#task-base::before{
+  content:"";display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--rfds-red);border:2px solid #fff;
+  box-shadow:0 0 0 4px rgba(240,91,34,.25),0 0 10px rgba(240,91,34,.4);
+  flex-shrink:0;animation:baseDotPulse 2.8s ease-in-out infinite;
+}
+@keyframes baseDotPulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 0 4px rgba(240,91,34,.25),0 0 10px rgba(240,91,34,.4);}
+  50%{transform:scale(1.15);box-shadow:0 0 0 6px rgba(240,91,34,.42),0 0 16px rgba(240,91,34,.65);}
+}
+.question{margin-top:auto;padding-top:20px;color:rgba(255,255,255,.62);font-size:10px;line-height:1.5;letter-spacing:.10em;text-transform:uppercase}
 .confirm-btn{
-  margin-top:11px;min-height:52px;width:100%;padding:14px;border-radius:14px;background:#fff;color:var(--rfds-navy);
+  margin-top:auto;min-height:54px;width:100%;padding:14px;border-radius:14px;background:#fff;color:var(--rfds-navy);
   font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
-  transition:transform .2s ease,background .2s ease,color .2s ease
+  transition:transform .2s ease,background .2s ease,color .2s ease;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .confirm-btn:disabled{opacity:.42;cursor:not-allowed}
 .confirm-btn:not(:disabled):hover{transform:translateY(-2px);background:var(--rfds-sky);color:#fff}
@@ -217,9 +271,11 @@ button{border:0}
 .result-card h2 span{color:var(--rfds-red)}
 .route-wrap{margin:32px 0;border-top:1px solid rgba(255,255,255,.10);border-bottom:1px solid rgba(255,255,255,.10);padding:17px 0}
 .route-row{display:flex;align-items:center;gap:13px}
-.route-dot{width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--rfds-sky);flex:none}
-.route-dot.actual{border-color:var(--rfds-red)}
-.route-line{height:2px;flex:1;background:linear-gradient(90deg,var(--rfds-sky),var(--rfds-red))}
+.route-dot{width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--rfds-red);flex:none}
+.route-dot.origin{background:var(--rfds-red);border-color:#fff;box-shadow:0 0 0 3px rgba(240,91,34,.35)}
+.route-dot.actual{border-color:var(--rfds-sky)}
+.route-line{height:2px;flex:1;background:linear-gradient(90deg,var(--rfds-red),var(--rfds-sky))}
+#route-origin{color:var(--rfds-red)!important;font-weight:900}
 .result-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .metric{padding:16px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.035)}
 .metric small{display:block;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.42);font-weight:800}
@@ -236,11 +292,22 @@ button{border:0}
 .board{
   width:min(980px,100%);background:#fff;border:1px solid rgba(0,32,91,.09);border-radius:26px;overflow:hidden;box-shadow:0 30px 70px rgba(0,32,91,.11)
 }
-.board-head{padding:26px;background:var(--rfds-navy);color:#fff;display:flex;justify-content:space-between;gap:20px;align-items:end}
+.board-head{padding:24px 28px;background:var(--rfds-navy);color:#fff;display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+.board-head-left{flex:1 1 auto}
+.board-head-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .board-head p{margin:0 0 5px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:800}
 .board-head h2{margin:0;font-size:clamp(2rem,4vw,3.6rem);line-height:.92;font-weight:900;letter-spacing:-.04em}
+.board-home-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:9px 16px;min-height:42px;
+  border-radius:12px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);
+  color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s ease
+}
+.board-home-btn:hover{background:var(--rfds-red);border-color:var(--rfds-red);transform:translateY(-1px)}
 .board-row{display:grid;grid-template-columns:65px 1fr 130px;align-items:center;padding:17px 24px;border-bottom:1px solid rgba(0,32,91,.07)}
 .board-row:last-child{border-bottom:0}
+.board-footer{padding:18px 24px 22px;background:#fdfdfb;border-top:1px solid rgba(0,32,91,.07);display:flex;justify-content:center;align-items:center}
+.board-action-btn{margin-top:0 !important;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 28px;font-size:12px}
 .rank{font-size:18px;font-weight:900;color:var(--rfds-red)}
 .pilot{font-weight:900;color:var(--rfds-navy)}
 .pilot small{display:block;margin-top:3px;color:#8792a3;font-size:8px;letter-spacing:.12em;text-transform:uppercase}
@@ -279,67 +346,17 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
 @media(max-width:900px){.result-card-live{min-height:auto}.score-grid{grid-template-columns:1fr 1fr}.total-tile{grid-column:1/-1}.result-flight-meta{min-width:110px}.scenario-copy{font-size:12px}}
 @media(max-width:700px){.score-grid{grid-template-columns:1fr}.total-tile{grid-column:auto}.score-tile{min-height:108px;padding:16px}.score-tile strong{font-size:36px}.accuracy-panel{padding:15px}.breakdown>div{padding:9px 0}.result-status{display:none}.mission-eyebrow{margin-top:18px}.task-data-row{align-items:flex-start}.task-data-row strong{max-width:58%}.scenario-copy{font-size:12px}}
 
-/* responsive */
-@media(max-width:1100px){
-  .start{grid-template-columns:1fr;min-height:auto;padding-top:110px}
-  .start-copy{max-width:760px}
-  .map-card{min-height:540px}
-  .game{grid-template-columns:1fr;padding-top:90px}
-  .game-map-panel{min-height:62vh}
-  .task-panel{min-height:auto}
+/* Touch and Base Responsive Foundation */
+html {
+  -webkit-text-size-adjust: 100%;
 }
-@media(max-width:900px){
-  .topbar{padding:16px 20px}
-  .brand-badge{font-size:9px}
-  .topstat{font-size:9px}
-  .map-stage{padding:48px 10px 30px}
+body {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-@media(max-width:700px){
-  .topbar{padding:14px 14px}
-  .brand-badge{padding:7px 10px;max-width:72vw}
-  .brand-badge .brand-text{display:none}
-  .topstat{padding:7px 10px;gap:6px}
-  .start{padding:92px 16px 24px;gap:20px}
-  .eyebrow{font-size:9px}
-  .start h1{font-size:clamp(3rem,15vw,5rem);margin:18px 0 16px}
-  .lead{font-size:1rem}
-  .form-grid{grid-template-columns:1fr;gap:10px;margin-top:24px}
-  .form-field.full{grid-column:auto}
-  .primary-btn{min-height:54px}
-  .map-card{min-height:390px;border-radius:22px}
-  .map-card:before{left:15px;top:14px;font-size:8px}
-  .map-card:after{right:15px;bottom:14px;font-size:8px}
-  .map-shell{inset:24px 8px}
-  .game{padding:76px 8px 8px;gap:8px}
-  .game-map-panel,.task-panel{border-radius:22px}
-  .game-map-panel{min-height:55vh}
-  .map-toolbar{inset:12px 12px auto}
-  .map-hint{bottom:12px;max-width:90%;font-size:8px}
-  .task-panel{padding:20px;min-height:42vh}
-  .task-panel h2{font-size:2.25rem;margin:18px 0 8px}
-  .task-type{margin-bottom:22px}
-  .task-data-row{font-size:11px;padding:11px 0}
-  .question{padding-top:20px}
-  .result{padding:86px 14px 18px}
-  .result-card{border-radius:23px;padding:22px}
-  .result-card h2{font-size:clamp(2.8rem,15vw,5rem)}
-  .result-metrics{grid-template-columns:1fr}
-  .result-actions{flex-direction:column}
-  .secondary-btn,.primary-btn{width:100%}
-  .board-screen{padding:86px 10px 18px}
-  .board-head{padding:20px}
-  .board-row{grid-template-columns:42px 1fr 88px;padding:15px 16px}
-  .score{font-size:14px}
-}
-@media(max-width:400px){
-  .game-map-panel{min-height:52vh}
-  .task-panel{min-height:46vh}
-  .map-canvas .careers-map-svg{height:92%}
-}
-@media(orientation:landscape) and (max-height:700px) and (max-width:900px){
-  .game{grid-template-columns:minmax(0,1fr) 330px;padding-top:70px}
-  .game-map-panel,.task-panel{min-height:calc(100vh - 78px)}
-  .task-panel{padding:20px}
+input, button, select, textarea {
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -422,43 +439,7 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
 #rfds-app .result-actions{margin-top:0}
 #rfds-app .flash-score{animation:scoreFlash .8s cubic-bezier(.16,1,.3,1)}
 @keyframes scoreFlash{0%{transform:scale(.82);opacity:.2;filter:blur(5px)}55%{transform:scale(1.06);opacity:1;filter:none}100%{transform:scale(1)}}
-@media(max-width:900px){
-  #rfds-app .start{padding-top:120px}
-  #rfds-app .map-card{min-height:420px;margin-top:28px}
-  #rfds-app .modal-grid{grid-template-columns:1fr}
-  #rfds-app .modal-grid .full{grid-column:auto}
-  #rfds-app .live-score-board{grid-template-columns:1fr 1fr}
-  #rfds-app .live-tile.total-score{grid-column:1/-1}
-  #rfds-app .score-breakdown-panel{padding:18px 18px 20px}
-  #rfds-app .breakdown-grid{grid-template-columns:1fr}
-  #rfds-app .result-title-row{align-items:flex-start}
-}
-@media(max-width:620px){
-  #rfds-app .topbar{padding:12px 14px}
-  #rfds-app .brand-text{display:none}
-  #rfds-app .start{padding:96px 16px 34px}
-  #rfds-app .start h1{font-size:clamp(3.1rem,16vw,5rem)}
-  #rfds-app .map-card{min-height:350px;border-radius:22px}
-  #rfds-app .modal-card{padding:22px;border-radius:22px}
-  #rfds-app .dispatch-scramble{font-size:clamp(2.3rem,13vw,4rem)}
-  #rfds-app .game{grid-template-columns:1fr;padding:72px 10px 10px;gap:10px}
-  #rfds-app .game-map-panel{min-height:56vh;border-radius:22px}
-  #rfds-app .task-panel{min-height:44vh;border-radius:22px;padding:18px}
-  #rfds-app .map-stage{padding:42px 8px 24px}
-  #rfds-app .map-hint{bottom:10px;max-width:92%;overflow:hidden;text-overflow:ellipsis}
-  #rfds-app .result{padding:82px 10px 14px;display:block}
-  #rfds-app .result-top-panel{border-radius:22px 22px 0 0;padding:22px 18px 18px}
-  #rfds-app .score-breakdown-panel{border-radius:0 0 22px 22px}
-  #rfds-app .live-score-board{grid-template-columns:1fr 1fr;gap:9px}
-  #rfds-app .live-tile{min-height:118px;padding:14px}
-  #rfds-app .live-points,#rfds-app .live-total{font-size:clamp(2.3rem,13vw,4rem)}
-  #rfds-app .next-row{flex-direction:column;align-items:stretch}
-  #rfds-app .result-actions{flex-direction:column;width:100%}
-  #rfds-app .primary-btn,#rfds-app .secondary-btn{width:100%}
-}
-
-
-/* V6 corrective layer */
+/* Forms & iOS zoom fix */
 #rfds-app .modal-shell{z-index:500;display:none;position:fixed;inset:0;align-items:center;justify-content:center;padding:16px;background:rgba(0,32,91,.54);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 #rfds-app .modal-shell.open{display:flex}
 #rfds-app .modal-card{width:min(520px,calc(100vw - 28px));padding:24px;border-radius:22px;background:#fff;box-shadow:0 40px 100px rgba(0,32,91,.28);border:1px solid rgba(0,32,91,.10)}
@@ -466,7 +447,7 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
 #rfds-app .modal-card p{margin:0;color:#5A6578;font-size:12px;line-height:1.5}
 #rfds-app .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
 #rfds-app .modal-grid .full{grid-column:1/-1}
-#rfds-app .form-input,#rfds-app .form-field input{height:46px;padding:0 12px;border-radius:11px;border:1px solid rgba(0,32,91,.12);font-size:13px;background:#fff;color:#00205B}
+#rfds-app .form-input,#rfds-app .form-field input{height:46px;padding:0 12px;border-radius:11px;border:1px solid rgba(0,32,91,.12);font-size:16px !important;background:#fff;color:#00205B}
 #rfds-app .modal-card .primary-btn{width:100%;min-height:48px;margin-top:15px;border-radius:12px}
 #rfds-app .modal-close{width:34px;height:34px}
 #rfds-app .dispatch-overlay{z-index:490;display:none;position:fixed;inset:0;align-items:center;justify-content:center;padding:16px;background:#030d2a;color:#fff}
@@ -482,8 +463,414 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
 #rfds-app .map-card .start-base{display:none!important}
 #rfds-app .task-heading-block h2{margin-top:8px}
 #rfds-app .task-panel .question strong{font-size:15px!important;letter-spacing:.05em}
-#rfds-app .task-panel .confirm-btn{min-height:52px}
-@media(max-width:700px){#rfds-app .modal-grid{grid-template-columns:1fr}#rfds-app .modal-grid .full{grid-column:auto}#rfds-app .dispatch-console{padding:24px 14px}#rfds-app .dispatch-main{min-height:100px}#rfds-app .dispatch-scramble{font-size:clamp(2.2rem,14vw,4rem)} }
+
+/* ========================================================================= */
+/* 1. iPad Landscape & Tablet Horizontal (900px to 1200px or landscape <= 900px) */
+/* ========================================================================= */
+@media (min-width: 901px) and (max-width: 1200px), 
+       (min-width: 901px) and (max-height: 850px) and (orientation: landscape) {
+  #rfds-app .game, .game {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100vh;
+    padding: 70px 14px 14px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 14px;
+    overflow: hidden;
+  }
+  #rfds-app .game-map-panel, #rfds-app .task-panel, .game-map-panel, .task-panel {
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+    border-radius: 22px;
+  }
+  #rfds-app .task-panel, .task-panel {
+    padding: 22px;
+  }
+  #rfds-app .task-content, .task-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  #rfds-app .task-heading-block {
+    margin-top: 14px;
+    padding-bottom: 10px;
+  }
+  #rfds-app .task-question-big {
+    font-size: 19px !important;
+  }
+  #rfds-app .task-data {
+    margin-bottom: 16px;
+  }
+  #rfds-app .task-panel .confirm-btn, .confirm-btn {
+    min-height: 52px;
+    margin-top: auto;
+  }
+  #rfds-app .map-stage, .map-stage {
+    padding: 38px 14px 20px;
+  }
+  #rfds-app .start {
+    padding-top: 110px;
+  }
+  #rfds-app .map-card {
+    min-height: 420px;
+  }
+}
+
+/* ========================================================================= */
+/* 2. iPad Portrait & Tablet Vertical (651px to 960px portrait or max-width 900px) */
+/* ========================================================================= */
+@media (min-width: 651px) and (max-width: 960px) and (orientation: portrait),
+       (min-width: 651px) and (max-width: 900px) {
+  #rfds-app .game, .game {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100vh;
+    padding: 68px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+  #rfds-app .game-map-panel, .game-map-panel {
+    flex: 1 1 0% !important;
+    min-height: 380px !important;
+    height: auto !important;
+    max-height: none !important;
+    border-radius: 24px;
+    position: relative;
+  }
+  #rfds-app .map-stage, .map-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 38px 14px 14px;
+  }
+  #rfds-app .map-canvas, .map-canvas {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #rfds-app .map-canvas .careers-map-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 96%;
+  }
+  #rfds-app .task-panel, .task-panel {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding: 16px 22px;
+    border-radius: 24px;
+  }
+  #rfds-app .task-content, .task-content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 8px;
+  }
+  #rfds-app .task-kicker, .task-kicker {
+    font-size: 10px;
+  }
+  #rfds-app .task-heading-block {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #rfds-app .task-question-big {
+    font-size: 20px !important;
+    line-height: 1.2;
+  }
+  #rfds-app .task-data {
+    margin: 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  #rfds-app .task-data-row, .task-data-row {
+    padding: 4px 0 !important;
+    border: 0 !important;
+    font-size: 12px;
+  }
+  #task-base {
+    font-size: 13px !important;
+  }
+  #rfds-app .task-panel .confirm-btn, .confirm-btn {
+    min-height: 52px;
+    margin-top: 4px !important;
+    font-size: 13px;
+    border-radius: 14px;
+  }
+  #rfds-app .start {
+    padding-top: 110px;
+  }
+  #rfds-app .map-card {
+    min-height: 420px;
+    margin-top: 28px;
+  }
+  #rfds-app .live-score-board {
+    grid-template-columns: 1fr 1fr;
+  }
+  #rfds-app .live-tile.total-score {
+    grid-column: 1/-1;
+  }
+}
+
+/* ========================================================================= */
+/* 3. Mobile Portrait (max-width: 650px)                                     */
+/* ========================================================================= */
+@media (max-width: 650px) {
+  #rfds-app .topbar, .topbar {
+    padding: 8px 12px;
+    height: 50px;
+  }
+  #rfds-app .brand-text {
+    display: none;
+  }
+  .brand-badge {
+    font-size: 9px;
+    padding: 6px 10px;
+  }
+  .topstat {
+    font-size: 9px;
+    padding: 6px 10px;
+    gap: 5px;
+  }
+  #rfds-app .start {
+    padding: 76px 14px 24px;
+  }
+  #rfds-app .start h1 {
+    font-size: clamp(2.6rem, 14vw, 4.2rem);
+  }
+  #rfds-app .map-card {
+    min-height: 320px;
+    border-radius: 20px;
+    margin-top: 20px;
+  }
+  #rfds-app .modal-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  #rfds-app .modal-grid {
+    grid-template-columns: 1fr;
+  }
+  #rfds-app .modal-grid .full {
+    grid-column: auto;
+  }
+  #rfds-app .dispatch-console {
+    padding: 24px 14px;
+  }
+  #rfds-app .dispatch-main {
+    min-height: 100px;
+  }
+  #rfds-app .dispatch-scramble {
+    font-size: clamp(2.1rem, 13vw, 3.8rem);
+  }
+  #rfds-app .game, .game {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100vh;
+    padding: 56px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+  }
+  #rfds-app .game-map-panel, .game-map-panel {
+    flex: 1 1 0% !important;
+    min-height: 280px !important;
+    height: auto !important;
+    max-height: none !important;
+    border-radius: 18px;
+    position: relative;
+  }
+  #rfds-app .map-stage, .map-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 6px 10px;
+  }
+  #rfds-app .map-canvas, .map-canvas {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #rfds-app .map-canvas .careers-map-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 96%;
+  }
+  #rfds-app .map-toolbar {
+    inset: 8px 8px auto;
+  }
+  .pill {
+    padding: 5px 8px;
+    font-size: 8px;
+  }
+  #rfds-app .map-hint, .map-hint {
+    bottom: 8px;
+    font-size: 8px;
+    padding: 5px 10px;
+    max-width: 94%;
+    pointer-events: none;
+  }
+  #rfds-app .task-panel, .task-panel {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+  #rfds-app .task-content, .task-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: auto !important;
+    gap: 6px;
+  }
+  #rfds-app .task-kicker, .task-kicker {
+    font-size: 9px;
+  }
+  #rfds-app .task-heading-block {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #rfds-app .task-question-big {
+    font-size: 16px !important;
+    line-height: 1.2;
+  }
+  #rfds-app .task-data {
+    margin: 0 !important;
+    border: 0 !important;
+  }
+  #rfds-app .task-data-row, .task-data-row {
+    padding: 3px 0 !important;
+    border: 0 !important;
+    font-size: 11px;
+  }
+  #task-base {
+    font-size: 12px !important;
+  }
+  #rfds-app .task-panel .confirm-btn, .confirm-btn {
+    min-height: 48px;
+    font-size: 12px;
+    border-radius: 12px;
+    margin-top: 2px !important;
+  }
+  #rfds-app .result {
+    padding: 68px 10px 14px;
+    display: block;
+  }
+  #rfds-app .result-top-panel {
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 16px;
+  }
+  #rfds-app .score-breakdown-panel {
+    border-radius: 0 0 20px 20px;
+    padding: 18px 16px 20px;
+  }
+  #rfds-app .live-score-board {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  #rfds-app .live-tile {
+    min-height: 110px;
+    padding: 12px;
+  }
+  #rfds-app .live-points, #rfds-app .live-total {
+    font-size: clamp(2.1rem, 12vw, 3.6rem);
+  }
+  #rfds-app .breakdown-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  #rfds-app .next-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #rfds-app .result-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  #rfds-app .primary-btn, #rfds-app .secondary-btn {
+    width: 100%;
+  }
+  .board-screen {
+    padding: 68px 10px 24px;
+  }
+  .board-head {
+    padding: 16px;
+    gap: 12px;
+  }
+  .board-head-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .board-row {
+    grid-template-columns: 36px 1fr 80px;
+    padding: 12px 14px;
+  }
+  .board-footer {
+    padding: 14px 16px;
+  }
+  .board-action-btn {
+    width: 100%;
+  }
+}
+
+/* ========================================================================= */
+/* 4. Mobile Landscape (max-height: 520px and orientation: landscape)        */
+/* ========================================================================= */
+@media (orientation: landscape) and (max-height: 520px) {
+  #rfds-app .topbar, .topbar {
+    padding: 5px 12px;
+    height: 42px;
+  }
+  #rfds-app .brand-text {
+    display: none;
+  }
+  #rfds-app .game, .game {
+    height: 100vh;
+    height: 100svh;
+    max-height: 100vh;
+    padding: 46px 8px 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 8px;
+    overflow: hidden;
+  }
+  #rfds-app .game-map-panel, #rfds-app .task-panel, .game-map-panel, .task-panel {
+    height: 100%;
+    min-height: 0;
+    border-radius: 16px;
+  }
+  #rfds-app .map-stage, .map-stage {
+    padding: 22px 6px 10px;
+  }
+  #rfds-app .task-panel, .task-panel {
+    padding: 12px;
+  }
+  #rfds-app .task-question-big {
+    font-size: 15px !important;
+  }
+  #rfds-app .task-data-row, .task-data-row {
+    padding: 3px 0;
+    font-size: 10px;
+  }
+  #rfds-app .task-panel .confirm-btn, .confirm-btn {
+    min-height: 42px;
+    font-size: 11px;
+  }
+}
 
 </style>
 </head>
@@ -492,17 +879,20 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
 <div id="rfds-app">
 <div class="app">
   <div class="topbar">
-    <div class="brand-badge"><span class="brand-dot"></span><span class="brand-text">RFDS Flight Crew Challenge</span></div>
-    <div class="topstat"><span>Flights</span><strong id="top-flights">0 / 10</strong><span class="sep">•</span><span>Score</span><strong id="top-score">0</strong></div>
+    <div class="brand-badge" id="brand-badge" role="button" tabindex="0" title="Return to start" style="cursor:pointer">PIN TO WIN</div>
+    <div class="topstat"><span>Flights</span><strong id="top-flights">0 / 3</strong><span class="sep">•</span><span>Score</span><strong id="top-score">0</strong></div>
   </div>
 
   <section id="screen-start" class="screen active" aria-label="Start">
     <div class="start">
       <div class="start-copy">
-        <span class="eyebrow">RFDS // FLIGHT OPERATIONS</span>
-        <h1>Know the country.<br><span>Fly the mission.</span></h1>
-        <p class="lead">You have been tasked. Study the country, place your navigation pin and see how close your flight comes to the real destination.</p>
-        <div class="start-actions"><button class="primary-btn start-cta" id="open-start-btn">Start the challenge</button></div>
+        
+        <h1>Fly the mission.<br><span>Pin to win.</span></h1>
+        <p class="lead"><strong>You’ve been tasked.</strong><br>
+        1. Set your flight mission and get your target town.<br>
+        2. Pin it as accurately as you can on the map.<br>
+        3. Get within 100km and win a prize.</p>
+        <div class="start-actions"><button class="primary-btn start-cta" id="open-start-btn">Start challenge</button></div>
       </div>
 
       <div class="map-card" aria-hidden="true">
@@ -557,23 +947,14 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
         </div>
       </div>
 
-      <aside class="task-panel">
+      <aside id="task-panel" class="task-panel">
         <div class="task-content">
-          <div class="task-kicker"><span>Task <strong id="task-number">01</strong> / 10</span><span id="task-difficulty">Difficulty 3</span></div>
-          <div class="mission-eyebrow" id="mission-eyebrow">TASK RECEIVED</div>
-          <div class="task-heading-block"><h2 id="task-heading">Where are you going?</h2><div id="task-question-big" class="task-question-big">Where are you flying?</div></div>
-          <div id="task-type" class="task-type">PATIENT TRANSFER</div>
-          <div class="scenario-copy" id="scenario-copy">A patient requires transfer from a remote community for further medical care.</div>
+          <div class="task-kicker"><span>Task: <strong id="task-number">1</strong> / 3</span></div>
+          <div class="task-heading-block"><div id="task-question-big" class="task-question-big">Where is 'location'?</div></div>
           <div class="task-data">
-            <div class="task-data-row"><span>Departing</span><strong id="task-base">Port Augusta</strong></div>
-            <div class="task-data-row"><span>Section</span><strong id="task-region">South Australia / Northern Territory</strong></div>
-            <div class="task-data-row"><span>Aircraft / vehicle</span><strong id="task-vehicle">Pilatus PC-12</strong></div>
-            <div class="task-data-row"><span>Mission</span><strong id="task-mission">Aeromedical retrieval</strong></div>
-            <div class="task-data-row"><span>Operating environment</span><strong id="task-terrain">Remote country</strong></div>
+            <div class="task-data-row"><span>Departure Base</span><strong id="task-base">Port Augusta</strong></div>
           </div>
-          <div class="question" id="question-text"><strong>Where are you going?</strong><span>Place your navigation pin on the map.</span></div>
           <button id="confirm-btn" class="confirm-btn" disabled>Confirm location</button>
-          <div class="task-foot">The destination is named. The map is the test.</div>
         </div>
       </aside>
     </div>
@@ -597,7 +978,7 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
           </div>
           <div class="result-label" style="margin-top:18px">Route confirmed</div>
           <div class="route-wrap" style="margin:8px 0 0;border-color:rgba(255,255,255,.08)">
-            <div class="route-row"><span class="route-dot"></span><strong id="route-origin">PORT AUGUSTA</strong><div class="route-line"></div><span class="route-dot actual"></span><strong id="route-dest">OODNADATTA</strong></div>
+            <div class="route-row"><span class="route-dot origin"></span><strong id="route-origin">PORT AUGUSTA</strong><div class="route-line"></div><span class="route-dot actual"></span><strong id="route-dest">OODNADATTA</strong></div>
           </div>
         </div>
         <div class="score-breakdown-panel">
@@ -624,10 +1005,25 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
     <div class="board-screen">
       <div class="board">
         <div class="board-head">
-          <div><p>RFDS Conference</p><h2>Live leaderboard</h2></div>
-          <p id="board-event-stat">Demo session</p>
+          <div class="board-head-left">
+            <p>National Rural Health Alliance Conference</p>
+            <h2>Live leaderboard</h2>
+          </div>
+          <div class="board-head-right">
+            <p id="board-event-stat">Demo session</p>
+            <button id="board-home-btn" class="board-home-btn" aria-label="Return to Home">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span>Home</span>
+            </button>
+          </div>
         </div>
         <div id="board-rows"></div>
+        <div class="board-footer">
+          <button id="board-home-footer-btn" class="primary-btn board-action-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:8px;vertical-align:middle"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Return to Home // New Pilot
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -640,13 +1036,11 @@ button:focus-visible,input:focus-visible{outline:3px solid rgba(0,173,239,.5);ou
       <button class="modal-close" id="registration-close" aria-label="Close">×</button>
       <div class="eyebrow" style="margin-bottom:14px">RFDS // FLIGHT OPERATIONS</div>
       <h3 id="registration-title">Report for duty.</h3>
-      <p>Enter your details before you join the flight crew. Your first name and surname appear on the conference leaderboard. Email is optional.</p>
+      <p>Enter your name to appear on our leaderboard.</p>
       <div class="modal-grid">
-        <div class="form-field"><label for="player-first-name">First name *</label><input id="player-first-name" maxlength="32" autocomplete="given-name" placeholder="First name" aria-required="true"></div>
-        <div class="form-field"><label for="player-surname">Surname *</label><input id="player-surname" maxlength="48" autocomplete="family-name" placeholder="Surname" aria-required="true"></div>
-        <div class="form-field full"><label for="player-email">Email <span style="font-weight:500;color:#9aa3b1">(optional)</span></label><input id="player-email" maxlength="120" type="email" autocomplete="email" placeholder="Email address (optional)"></div>
+        <div class="form-field full"><label for="player-name">Full Name</label><input id="player-name" maxlength="80" autocomplete="name" placeholder="Full Name"></div>
+        <div class="form-field full"><label for="player-email">Email (optional)</label><input id="player-email" maxlength="120" type="email" autocomplete="email" placeholder="Email address"></div>
       </div>
-      <div class="form-note">First name and surname are required for the conference leaderboard. Email is optional.</div>
       <button class="primary-btn" id="start-btn">Start flight operations</button>
     </div>
   </div>
@@ -698,11 +1092,28 @@ const state={firstName:'',surname:'',email:'',player:'',score:0,flights:[],plan:
 
 const $=id=>document.getElementById(id);
 const screens={start:$('screen-start'),game:$('screen-game'),result:$('screen-result'),board:$('screen-board')};
-function showScreen(k){Object.entries(screens).forEach(([key,el])=>el.classList.toggle('active',key===k));window.scrollTo?.(0,0);}
+function showScreen(k){
+  Object.entries(screens).forEach(([key,el])=>el.classList.toggle('active',key===k));
+  window.scrollTo?.(0,0);
+  if(k==='game'){
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        if(state.current && $('game-map-svg') && $('origin-dot')){
+          setSvgCircle($('origin-dot'),state.current.base.lat,state.current.base.lon,$('game-map-svg'));
+          $('origin-dot').style.display='block';
+        }
+        if(state.guess && $('game-map-svg') && $('guess-dot')){
+          setSvgCircle($('guess-dot'),state.guess.lat,state.guess.lon,$('game-map-svg'));
+          $('guess-dot').style.display='block';
+        }
+      });
+    });
+  }
+}
 function clamp(n,a,b){return Math.max(a,Math.min(b,n));}
 function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(window.__rfdsToast);window.__rfdsToast=setTimeout(()=>el.classList.remove('show'),1800);}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-function updateTop(){$('top-flights').textContent=`${state.flights.length} / 10`;$('top-score').textContent=state.score.toLocaleString();}
+function updateTop(){$('top-flights').textContent=`${state.flights.length} / 3`;$('top-score').textContent=state.score.toLocaleString();}
 
 /* The Careers map uses the same projection as its base/waypoint coordinates.
    This affine transform is fitted from the supplied Careers HTML's exact map nodes. */
@@ -770,14 +1181,17 @@ function pickPlan(){
   const chosen=ordered.flatMap(s=>bySection[s].slice(0,2));
   const p=[...chosen];
   for(let i=p.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[p[i],p[j]]=[p[j],p[i]];}
-  return p.slice(0,10).map((d,i)=>{const s=scenarioFor(d);return {id:`mission-${Date.now()}-${i}`,destinationId:d.id,d,base:BASES.find(b=>b.id===({WA:'jandakot',SA_NT:'port-augusta',QLD:'charleville',NSW_SE:'broken-hill',VIC_TAS:'essendon'}[d.section]))||BASES[0],scenario:s};});
+  return p.slice(0,3).map((d,i)=>{const s=scenarioFor(d);return {id:`mission-${Date.now()}-${i}`,destinationId:d.id,d,base:BASES.find(b=>b.id===({WA:'jandakot',SA_NT:'port-augusta',QLD:'charleville',NSW_SE:'broken-hill',VIC_TAS:'essendon'}[d.section]))||BASES[0],scenario:s};});
 }
 function setSvgCircle(el,lat,lon,svg){
+  if(!el || !svg) return;
   const p=latLonToSvg(lat,lon);
-  const b=svg.getBoundingClientRect();
   const pt=svg.createSVGPoint();pt.x=p.x;pt.y=p.y;
-  const screenPt=pt.matrixTransform(svg.getScreenCTM());
+  const ctm=svg.getScreenCTM();
+  if(!ctm) return;
+  const screenPt=pt.matrixTransform(ctm);
   const canvas=$('map-canvas').getBoundingClientRect();
+  if(!canvas.width || !canvas.height) return;
   el.style.left=`${((screenPt.x-canvas.left)/canvas.width)*100}%`;
   el.style.top=`${((screenPt.y-canvas.top)/canvas.height)*100}%`;
 }
@@ -789,30 +1203,25 @@ function drawRoute(){
 }
 function loadMission(){
   state.current=state.plan[state.currentIndex]; state.guess=null;
-  const s=state.current.scenario;
-  $('task-number').textContent=String(state.currentIndex+1).padStart(2,'0');
-  $('task-difficulty').textContent=`Difficulty ${state.current.d.difficulty}`;
-  $('mission-eyebrow').textContent=s.eyebrow;
-  $('task-heading').innerHTML=`${state.current.d.name.toUpperCase()}<span>, ${state.current.d.state}</span>`;
-  $('task-question-big').textContent=`WHERE IS ${state.current.d.name.toUpperCase()}?`;
-  $('task-type').textContent=s.type;
-  $('scenario-copy').textContent=s.copy;
+  $('task-number').textContent=String(state.currentIndex+1);
+  $('task-question-big').textContent=`Where is ‘${state.current.d.name}’? `;
   $('task-base').textContent=state.current.base.name;
-  $('task-region').textContent=sectionLabel(state.current.d.section);
-  $('task-vehicle').textContent=s.vehicle;
-  $('task-mission').textContent=s.mission;
-  $('task-terrain').textContent=s.terrain || terrain(state.current.d);
-  $('map-section-pill').textContent=state.current.d.section==='VIC_TAS'?'VIC / TAS':state.current.d.section.replace('_',' / ');
-  $('map-hint').textContent='Place your pin as accurately as you can';
+  
   $('guess-dot').style.display='none';$('actual-dot').style.display='none';$('route-path').setAttribute('d','');
   $('confirm-btn').disabled=true;
-  $('origin-dot').style.display='none';
+  
+  requestAnimationFrame(()=>{
+    if(state.current && $('game-map-svg') && $('origin-dot')){
+      setSvgCircle($('origin-dot'),state.current.base.lat,state.current.base.lon,$('game-map-svg'));
+      $('origin-dot').style.display='block';
+    }
+  });
   updateTop();
 }
 function openRegistration(){
   $('registration-modal').classList.add('open');
   $('registration-modal').setAttribute('aria-hidden','false');
-  setTimeout(()=>$('player-first-name').focus(),80);
+  setTimeout(()=>$('player-name').focus(),80);
 }
 function closeRegistration(){
   $('registration-modal').classList.remove('open');
@@ -830,13 +1239,15 @@ function dispatchStart(){
   setTimeout(()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');state.dispatching=false;loadMission();showScreen('game');$('task-panel')?.classList.remove('reveal');void $('task-panel')?.offsetWidth;$('task-panel')?.classList.add('reveal');setSvgCircle($('origin-dot'),state.current.base.lat,state.current.base.lon,$('game-map-svg'));$('origin-dot').style.display='block';},3000);
 }
 function startGame(){
-  const first=($('player-first-name').value||'').trim().slice(0,32);
-  const last=($('player-surname').value||'').trim().slice(0,48);
+  const name=($('player-name').value||'').trim().slice(0,80);
   const email=($('player-email').value||'').trim().slice(0,120);
-  if(!first||!last){toast('First name and surname are required');return;}
-  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast('Please enter a valid email or leave it blank');return;}
-  state.firstName=first;state.surname=last;state.email=email;state.player=`${first} ${last.charAt(0)}.`;
-  state.score=0;state.flights=[];state.currentIndex=0;state.plan=pickPlan();dispatchStart();
+  state.player = name || 'Anonymous Pilot';
+  state.email = email;
+  state.score = 0;
+  state.flights = [];
+  state.currentIndex = 0;
+  state.plan = pickPlan();
+  dispatchStart();
 }
 function setGuessFromPointer(e){
   const svg=$('game-map-svg'), p=svgPointFromClient(svg,e.clientX,e.clientY); if(!p)return;
@@ -877,12 +1288,12 @@ function confirmGuess(){
   setTimeout(()=>{const el=$('result-flight-total');animateNumber(el,0,scoring.total,650,'+');animateNumber($('result-total'),priorTotal,state.score,900,'');$('accuracy-label').textContent=statusText;const pct=Math.max(3,Math.min(100,100-dist/3));$('accuracy-live-fill').style.width=pct+'%';const best=Math.min(...state.flights.map(f=>f.distanceKm));$('personal-best').innerHTML=`Personal best: <strong>${best.toFixed(1)} KM</strong>`;$('leader-shift').textContent=state.flights.length===1?'FIRST FLIGHT COMPLETE':'SCORE UPDATED';},1450);
 }
 function nextFlight(){
-  if(state.currentIndex>=9){populateBoard();showScreen('board');return;}
+  if(state.currentIndex>=state.plan.length-1){populateBoard();showScreen('board');return;}
   state.currentIndex++;loadMission();showScreen('game');
 }
 function populateBoard(){
   const stored=JSON.parse(localStorage.getItem('rfds_demo_board')||'[]');
-  const entry={name:state.player,score:state.score,flights:10};
+  const entry={name:state.player,score:state.score,flights:3};
   const merged=[...stored.filter(x=>x.name!==state.player),entry].sort((a,b)=>b.score-a.score).slice(0,20);
   localStorage.setItem('rfds_demo_board',JSON.stringify(merged));
   $('board-rows').innerHTML=merged.map((x,i)=>`<div class="board-row"><div class="rank">${i+1}</div><div class="pilot">${escapeHtml(x.name)}<small>${x.flights} flights</small></div><div class="score">${Number(x.score).toLocaleString()}</div></div>`).join('');
@@ -894,11 +1305,52 @@ const mapCanvas=$('map-canvas');
 mapCanvas.addEventListener('pointerdown',e=>{mapCanvas.setPointerCapture?.(e.pointerId);setGuessFromPointer(e);});
 mapCanvas.addEventListener('pointermove',e=>{if((e.buttons&1)===1&&state.guess)setGuessFromPointer(e);});
 $('open-start-btn').addEventListener('click',openRegistration);$('start-btn').addEventListener('click',startGame);$('registration-close').addEventListener('click',closeRegistration);$('registration-modal').addEventListener('click',e=>{if(e.target.id==='registration-modal')closeRegistration();});
-['player-first-name','player-surname','player-email'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')startGame;}));
+['player-name','player-email'].forEach(id=>$(id)?.addEventListener('keydown',e=>{if(e.key==='Enter')startGame();}));
 $('confirm-btn').addEventListener('click',confirmGuess);
 $('next-btn').addEventListener('click',nextFlight);
 $('leaderboard-btn').addEventListener('click',()=>{populateBoard();showScreen('board');});
+
+function returnToHome(){
+  state.score=0;
+  state.flights=[];
+  state.currentIndex=0;
+  state.current=null;
+  state.guess=null;
+  state.dispatching=false;
+  const nameInput=$('player-name'); if(nameInput) nameInput.value='';
+  const emailInput=$('player-email'); if(emailInput) emailInput.value='';
+  if($('guess-dot')) $('guess-dot').style.display='none';
+  if($('actual-dot')) $('actual-dot').style.display='none';
+  if($('origin-dot')) $('origin-dot').style.display='none';
+  if($('route-path')) $('route-path').setAttribute('d','');
+  if($('confirm-btn')) $('confirm-btn').disabled=true;
+  updateTop();
+  showScreen('start');
+  toast('Returned to base // Ready for new challenge');
+}
+$('board-home-btn')?.addEventListener('click',returnToHome);
+$('board-home-footer-btn')?.addEventListener('click',returnToHome);
+$('brand-badge')?.addEventListener('click',()=>{
+  if(screens.board?.classList.contains('active') || screens.result?.classList.contains('active')){
+    returnToHome();
+  } else if(!screens.start?.classList.contains('active')){
+    if(confirm('Return to home screen? Current mission progress will reset.')){
+      returnToHome();
+    }
+  }
+});
+$('brand-badge')?.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();returnToHome();}});
+
 updateTop();
+
+window.addEventListener('resize',()=>{
+  if(screens.game?.classList.contains('active') && state.current && $('game-map-svg')){
+    if($('origin-dot')?.style.display!=='none') setSvgCircle($('origin-dot'),state.current.base.lat,state.current.base.lon,$('game-map-svg'));
+    if(state.guess && $('guess-dot')?.style.display!=='none') setSvgCircle($('guess-dot'),state.guess.lat,state.guess.lon,$('game-map-svg'));
+    if($('actual-dot')?.style.display!=='none') setSvgCircle($('actual-dot'),state.current.d.lat,state.current.d.lon,$('game-map-svg'));
+    drawRoute();
+  }
+});
 
 /* CMS breakout protection retained from RFDS source */
 (function unleashSandbox(){
